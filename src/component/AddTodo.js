@@ -7,6 +7,7 @@ class AddTodo extends Component {
     super();
     this.state = {
       content: "",
+      date: ""
     };
   }
   // The handleChange function updates the react state with the new input value provided from the user.
@@ -15,8 +16,9 @@ class AddTodo extends Component {
   handleChange = (event) => {
     this.setState({
       content: event.target.value,
+      date: new Date().toLocaleString('en-US'),
     });
-  };
+  }
   // The handleSubmit function collects the forms input and puts it into the react state.
   // event.preventDefault() is called to prevents default event behavior like refreshing the browser.
   // this.props.addTodo(this.state) passes the current state (or user input) into the addTodo function defined
@@ -24,12 +26,16 @@ class AddTodo extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.state.content.trim()) {
-      this.props.addTodo(this.state);
-      this.setState({
-        content: "",
+      this.setState({ date: new Date().toLocaleString('en-US') }, () => {
+        this.props.addTodo(this.state);
+        this.setState({
+          content: "",
+          date: ""
+        });
       });
     }
-  };
+  }
+  
   render() {
     return (
       // 1. When rendering a component, you can render as many elements as you like as long as it is wrapped inside
